@@ -21,17 +21,17 @@ A fun, hackable voice assistant that lives on your machine. Say "ok google" or y
 
 1.  **Clone this project** (or just save `hello_gemma.py`).
 
-2.  **Install Python dependencies:**
-    ```bash
-    pip install pvporcupine sounddevice numpy torch transformers huggingface_hub pyttsx3 beepy webrtcvad
-    ```
-
-3.  **Install system libraries.** This might be needed for `sounddevice` and `pyttsx3`.
+2.  **Install system libraries.**
     
     For Debian/Ubuntu:
     ```bash
     sudo apt-get update
-    sudo apt-get install portaudio19-dev libasound2-dev espeak
+    sudo apt-get install espeak python3-dev libasound2-dev
+    ```
+
+3.  **Install Python dependencies:**
+    ```bash
+    pip install pvporcupine sounddevice numpy torch transformers huggingface_hub pyttsx3 pillow torchvision accelerate timm beepy webrtcvad-wheels librosa
     ```
 
 4.  **Get your access keys:**
@@ -62,13 +62,3 @@ python hello_gemma.py --hf_token YOUR_TOKEN --pv_access_key YOUR_KEY --keyword_p
 -   `--vad_aggressiveness`: WebRTC VAD aggressiveness (0-3). 0 is least aggressive, 3 is most. (Default: `1`)
 -   `--silence_duration`: The duration of silence in seconds to stop recording. (Default: `5`)
 -   `--device_name`: A substring of your microphone's name (e.g., "Jabra", "USB"). (Default: `Jabra`)
-
-## How It Works
-
-1.  The script starts and listens for the configured wake word.
-2.  When you say it, it gives a verbal cue ("Listening.") and starts recording your voice.
-3.  It keeps recording until it detects a configured duration of silence using WebRTC VAD.
-4.  The recorded audio is sent to the Gemma model.
-5.  Gemma processes the audio and generates a text response.
-6.  The text response is spoken back to you using `pyttsx3`.
-7.  The assistant goes back to listening for the wake word. Ready for your next command!
